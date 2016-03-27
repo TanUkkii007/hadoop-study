@@ -7,7 +7,7 @@ import org.apache.hadoop.fs.FsUrlStreamHandlerFactory
 import org.apache.hadoop.io.IOUtils
 
 
-object ReadDataFromURL extends App {
+object ReadDataFromURL extends App with LoanPattern {
   URL.setURLStreamHandlerFactory(new FsUrlStreamHandlerFactory())
 
   val url = args(0)
@@ -20,11 +20,4 @@ object ReadDataFromURL extends App {
     IOUtils.closeStream(in)
   }
 
-  def loanPattern[T](fi: => T)(f: T => Unit): Unit = {
-    try {
-      fi
-    } finally { in: T =>
-      f(in)
-    }
-  }
 }
